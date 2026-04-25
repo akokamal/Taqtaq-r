@@ -1,1 +1,241 @@
-<!DOCTYPE html><html id="html-tag" lang="ku" dir="rtl"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>TeqTeq Resort | پڕۆژەی تەقتەق</title>    <style>        :root {             --gold: #ffb700;             --dark-bg: #0b0d11;             --card-bg: #161a23;             --text-gray: #a0a0a0;            --white: #ffffff;            --shadow: 0 10px 30px rgba(0,0,0,0.5);        }        body, html {             margin: 0; padding: 0; min-height: 100vh;             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;             background: var(--dark-bg); color: var(--white);             scroll-behavior: smooth; overflow-x: hidden;        }        .page { display: none; min-height: 100vh; width: 100%; transition: 0.5s; }        .active { display: block; animation: slideUp 0.6s ease-out; }        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }        .hero {             height: 100vh; display: flex; align-items: center; justify-content: center;            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('bridge.jpg'); /* لێرە وێنەی پردەکەمان دانا */            background-size: cover; background-position: center;        }        .welcome-box {             text-align: center; background: rgba(255,255,255,0.05);             padding: 40px; border-radius: 30px; backdrop-filter: blur(15px);            border: 1px solid rgba(255,255,255,0.1); box-shadow: var(--shadow);        }        .btn-main {            padding: 15px 40px; margin: 10px; border: none; border-radius: 50px;            font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s;            text-transform: uppercase; letter-spacing: 1px;        }        .btn-gold { background: var(--gold); color: #000; box-shadow: 0 5px 15px rgba(255, 183, 0, 0.3); }        .btn-gold:hover { transform: scale(1.05); background: #ffa600; }        input {             width: 100%; padding: 15px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);            background: rgba(255,255,255,0.05); color: white; font-size: 16px; outline: none;            box-sizing: border-box; transition: 0.3s;        }        input:focus { border-color: var(--gold); background: rgba(255,255,255,0.1); }        .header {             padding: 40px 20px; text-align: center;             background: linear-gradient(to bottom, #1a1e26, var(--dark-bg));        }        .grid {             display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));             gap: 20px; padding: 20px; max-width: 1000px; margin: 0 auto;        }        .card {             background: var(--card-bg); border-radius: 25px; padding: 30px 15px;            text-align: center; border: 1px solid rgba(255,255,255,0.05);            transition: 0.4s; position: relative; overflow: hidden;        }        .card:hover { transform: translateY(-10px); background: #1e2430; border-color: var(--gold); }        .card i { font-size: 45px; margin-bottom: 15px; display: block; }        .detail-img-container { position: relative; width: 100%; height: 250px; border-radius: 0 0 40px 40px; overflow: hidden; }        .detail-img { width: 100%; height: 100%; object-fit: cover; }                .info-card {             background: var(--card-bg); border-radius: 30px; padding: 25px;            box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.05);            margin: -40px 20px 20px 20px; position: relative; z-index: 2;        }        .price-badge {             display: inline-block; background: var(--gold); color: black;             padding: 8px 20px; border-radius: 50px; font-weight: bold; font-size: 20px;        }        select {            width: 100%; padding: 15px; border-radius: 15px; background: #0b0d11;            color: white; border: 1px solid var(--gold); margin: 15px 0; outline: none;        }        .wa-btn {            background: #25D366; color: white; padding: 18px; border-radius: 20px;            text-decoration: none; display: flex; align-items: center; justify-content: center;            font-weight: bold; font-size: 18px; margin-top: 20px; gap: 10px;        }    </style></head><body>    <div id="lang-page" class="page active">        <div class="hero">            <div class="welcome-box">                <h1 id="txt-welcome">پڕۆژەی گەشتیاری تەقتەق</h1>                <button class="btn-main btn-gold" onclick="setLang('ku')">کوردی</button>                <button class="btn-main btn-gold" onclick="setLang('ar')">العربية</button>            </div>        </div>    </div>    <div id="login-page" class="page">        <div class="hero">            <div class="welcome-box" style="width: 320px;">                <h2 id="txt-login-title">بەخێربێیت</h2>                <input type="text" id="username" placeholder="ناوەکەت بنووسە...">                <br><br>                <button class="btn-main btn-gold" style="width: 100%;" id="txt-login-btn" onclick="goMenu()">چوونە ژوورەوە</button>            </div>        </div>    </div>    <div id="menu-page" class="page">        <div class="header">            <h1 style="color: var(--gold); margin: 0; font-size: 24px;" id="txt-main-title">بەخێرهاتی ئازیزم بۆ تەقتەقی گەشتیاران</h1>            <p id="welcome-msg" style="color: var(--text-gray); margin-top: 10px;"></p>        </div>        <div class="grid" id="grid-items"></div>    </div>    <div id="sub-page" class="page">        <div class="detail-img-container">            <button onclick="goBack()" style="position:absolute; top:20px; right:20px; z-index:10; background:rgba(0,0,0,0.6); color:white; border:none; padding:10px 15px; border-radius:50px; cursor:pointer;">گەڕانەوە ⬅</button>            <img id="sub-img" class="detail-img" src="">        </div>        <div class="info-card">            <h2 id="sub-title" style="margin:0 0 10px 0; color:var(--gold);"></h2>            <p id="sub-desc" style="color:var(--text-gray); line-height:1.6; font-size: 14px;"></p>                        <div style="margin: 20px 0;">                <span id="txt-price-label" style="font-size:13px; color:var(--text-gray);">نرخی دیاریکراو:</span><br>                <div class="price-badge" id="sub-price"></div>            </div>            <label id="txt-type-label" style="font-weight:bold; font-size: 14px;"></label>            <select id="item-options" onchange="updatePrice()"></select>                        <a href="#" class="wa-btn" onclick="sendBooking()">                <span id="txt-wa-btn">حجزکردن لە واتسئەپ</span> 💬            </a>        </div>    </div>    <script>        let currentLang = 'ku';        let userName = "";        let selectedKey = "";        const pricing = {            kepr: [ {n: "کەپری خێزانی", p: "١٥,٠٠٠", ar: "كابينة عائلية"}, {n: "کەپری کەنار زێ", p: "٢٥,٠٠٠", ar: "كابينة على الزاب"}, {n: "کەپری VIP شاهانە", p: "٤٠,٠٠٠", ar: "كابينة VIP ملكية"} ],            fish: [ {n: "١ کیلۆ ماسی برژاو", p: "١٨,٠٠٠", ar: "١ كيلو سمك مشوي"}, {n: "٢ کیلۆ ماسی برژاو", p: "٣٦,٠٠٠", ar: "٢ كيلو سمك مشوي"} ],            food: [ {n: "نەفەرە کەبابی تایبەت", p: "١٢,٠٠٠", ar: "نفر كباب خاص"}, {n: "نەفەرە تیکەی گۆشت", p: "١٤,٠٠٠", ar: "نفر تكة لحم"} ],            farm: [ {n: "خانووی ڕۆژانە", p: "٨٠,٠٠٠", ar: "بيت استراحة نهاري"}, {n: "مانەوەی شەو (Full)", p: "١٥٠,٠٠٠", ar: "مبيت ليلة كاملة"} ],            boat: [ {n: "گەشتی بەلەمی خێرا", p: "١٥,٠٠٠", ar: "جولة قارب سريع"} ],            moto: [ {n: "ماتۆڕی چوار چەرخە", p: "١٠,٠٠٠", ar: "دراجة ٤ عجلات"} ],            cafe: [ {n: "نێرگەلە و خواردنەوە", p: "١٠,٠٠٠", ar: "ارجيلة ومشروبات"} ],            kids: [ {n: "یارییە گشتییەکان", p: "بێبەرامبەر", ar: "العاب عامة"} ]        };        const translations = {            ku: {                welcome: "بەخێربێن بۆ پڕۆژەی تەقتەق", loginTitle: "تۆمارکردنی ناو", loginBtn: "چوونە ژوورەوە",                mainTitle: "بەخێرهاتی ئازیزم بۆ تەقتەقی گەشتیاران", back: "گەڕانەوە", typeLabel: "جۆری مەبەست هەڵبژێرە:",                waBtn: "پەیوەندی و حجزکردن", priceLabel: "نرخی دیاریکراو:",                services: {                    kepr: { t: "کەپرەکان", i: "🏕️", d: "خۆشترین کەپر لە کەناری زێی بچووک بە دیمەنێکی سەرنجڕاکێش." },                    fish: { t: "ماسی زێ", i: "🐟", d: "ماسی تازە و زێ بە برژاندنی داری سروشتی تەقتەق." },                    food: { t: "چێشتخانە", i: "🍢", d: "باشترین کەباب و تیکە بە گۆشتی فرێشی ناوخۆیی." },                    farm: { t: "مەزرەعە", i: "🏡", d: "خانووی مۆدێرن و مەزرەعەی خێزانی بۆ پشوویەکی ئارام." },                    boat: { t: "گەشتی بەلەم", i: "🚤", d: "چێژ وەرگرتن لە دیمەنی زێ بە بەلەمی خێرا." },                    moto: { t: "ماتۆڕ سواری", i: "🏍️", d: "سەرکێشی ماتۆڕ سواری لەناو سروشتی ناوچەکە." },                    cafe: { t: "کافتریا", i: "☕", d: "خواردنەوەی سارد و گەرم و جۆرەکانی نێرگەلە." },                    kids: { t: "یاری مناڵان", i: "🎠", d: "ژینگەیەکی ئارام و پڕ لە یاری بۆ مناڵە چاوگەشەکان." }                }            },            ar: {                welcome: "أهلاً بكم في منتجع طقطق", loginTitle: "تسجيل الاسم", loginBtn: "دخول",                mainTitle: "منتجع طقطق السياحي", back: "رجوع", typeLabel: "اختر النوع المطلوب:",                waBtn: "الاتصال والحجز الآن", priceLabel: "السعر المحدد:",                services: {                    kepr: { t: "الكابينات", i: "🏕️", d: "أجمل الكابينات على ضفاف الزاب الصغير بإطلالة خلابة." },                    fish: { t: "سمك الزاب", i: "🐟", d: "سمك طازج مسكوف على الحطب الطبيعي الأصيل." },                    food: { t: "المطعم", i: "🍢", d: "أفخر أنواع الكباب والتكة بلحم غنم طازج يومياً." },                    farm: { t: "المزارع", i: "🏡", d: "بيوت استراحة ومزارع عائلية حديثة لقضاء أجمل الأوقات." },                    boat: { t: "جولة قارب", i: "🚤", d: "استمتع بجمال النهر بجولة سريعة في القوارب." },                    moto: { t: "الماتورات", i: "🏍️", d: "مغامرة ركوب الدراجات ذات الأربع عجلات في الطبيعة." },                    cafe: { t: "كافيتريا", i: "☕", d: "مشروبات باردة وساخنة مع كافة أنواع الأراجيل." },                    kids: { t: "ألعاب أطفال", i: "🎠", d: "بيئة آمنة وممتعة مخصصة لألعاب الأطفال." }                }            }        };        function setLang(lang) {            currentLang = lang;            document.getElementById('txt-welcome').innerText = translations[lang].welcome;            document.getElementById('txt-login-title').innerText = translations[lang].loginTitle;            document.getElementById('txt-login-btn').innerText = translations[lang].loginBtn;            showPage('login-page');        }        function goMenu() {            userName = document.getElementById('username').value;            if(!userName) { alert("تکایە ناوەکەت بنووسە / يرجى كتابة الاسم"); return; }            document.getElementById('welcome-msg').innerText = (currentLang==='ku'?"بەخێرهاتی ئەزیزم، ":"أهلاً بك يا عزيزي، ") + userName;            document.getElementById('txt-main-title').innerText = translations[currentLang].mainTitle;                        const grid = document.getElementById('grid-items');            grid.innerHTML = "";            Object.keys(translations[currentLang].services).forEach(key => {                const s = translations[currentLang].services[key];                grid.innerHTML += `<div class="card" onclick="openDetail('${key}')"><i>${s.i}</i><h3>${s.t}</h3></div>`;            });            showPage('menu-page');        }        function openDetail(key) {            selectedKey = key;            const lang = translations[currentLang];            const s = lang.services[key];                        document.getElementById('sub-title').innerText = s.t;            document.getElementById('sub-desc').innerText = s.d;            document.getElementById('sub-img').src = key + ".jpg"; // لێرە وێنەکان دەخوێنێتەوە (food.jpg, fish.jpg, هتد)            document.getElementById('txt-price-label').innerText = lang.priceLabel;            document.getElementById('txt-type-label').innerText = lang.typeLabel;            document.getElementById('txt-wa-btn').innerText = lang.waBtn;            const sel = document.getElementById('item-options');            sel.innerHTML = "";            pricing[key].forEach((item, index) => {                let optName = (currentLang === 'ku') ? item.n : item.ar;                sel.innerHTML += `<option value="${index}">${optName}</option>`;            });            updatePrice();            showPage('sub-page');        }        function updatePrice() {            const index = document.getElementById('item-options').value;            const price = pricing[selectedKey][index].p;            document.getElementById('sub-price').innerText = price + (price === "بێبەرامبەر" ? "" : " IQD");        }        function sendBooking() {            const index = document.getElementById('item-options').value;            const item = pricing[selectedKey][index];            const bID = "RESORT-" + Math.floor(Math.random()*9000+1000);                        const msg = `👑 *داواکاری حجزکردن (تەقتەق)* 👑%0A` +                        `----------------------------%0A` +                        `🆔 ID: \`${bID}\` %0A` +                        `👤 کڕیار: ${userName} %0A` +                        `📂 بەش: ${document.getElementById('sub-title').innerText} %0A` +                        `✨ جۆر: ${currentLang==='ku'?item.n:item.ar} %0A` +                        `💰 نرخ: ${item.p} %0A` +                        `----------------------------%0A` +                        `☀️ چاوەڕێی وەڵامی ئێوەین...`;            window.location.href = `https://wa.me/9647500919805?text=${msg}`;        }        function showPage(id) {            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));            document.getElementById(id).classList.add('active');            window.scrollTo(0,0);        }        function goBack() { showPage('menu-page'); }    </script></body></html>
+﻿<!DOCTYPE html>
+<html id="html-tag" lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeqTeq Resort | پڕۆژەی تەقتەق</title>
+    <style>
+        :root { 
+            --gold: #ffb700; 
+            --dark-bg: #0b0d11; 
+            --card-bg: #161a23; 
+            --text-gray: #a0a0a0;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        body, html { 
+            margin: 0; padding: 0; min-height: 100vh; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: var(--dark-bg); color: var(--white); 
+            scroll-behavior: smooth; overflow-x: hidden;
+        }
+
+        .page { display: none; min-height: 100vh; width: 100%; transition: 0.5s; }
+        .active { display: block; animation: slideUp 0.6s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hero { 
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('bridge.jpg');
+            background-size: cover; background-position: center;
+        }
+        .welcome-box { 
+            text-align: center; background: rgba(255,255,255,0.05); 
+            padding: 40px; border-radius: 30px; backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1); box-shadow: var(--shadow);
+        }
+
+        .btn-main {
+            padding: 15px 40px; margin: 10px; border: none; border-radius: 50px;
+            font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        .btn-gold { background: var(--gold); color: #000; }
+        .btn-gold:hover { transform: scale(1.05); background: #ffa600; }
+
+        input { 
+            width: 100%; padding: 15px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05); color: white; font-size: 16px; outline: none;
+            box-sizing: border-box;
+        }
+
+        .header { padding: 40px 20px; text-align: center; background: linear-gradient(to bottom, #1a1e26, var(--dark-bg)); }
+        
+        /* ستایلی کاردەکان بۆ ئەوەی وێنە نیشان بدەن */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; padding: 15px; }
+        .card { 
+            background: var(--card-bg); border-radius: 20px; overflow: hidden;
+            text-align: center; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s;
+            cursor: pointer;
+        }
+        .card:hover { transform: translateY(-5px); border-color: var(--gold); }
+        .card img { width: 100%; height: 120px; object-fit: cover; }
+        .card h3 { font-size: 16px; padding: 10px 5px; margin: 0; }
+
+        .detail-img-container { position: relative; width: 100%; height: 300px; overflow: hidden; }
+        .detail-img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .info-card { 
+            background: var(--card-bg); border-radius: 30px; padding: 25px;
+            box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.05);
+            margin: -30px 15px 20px 15px; position: relative; z-index: 2;
+        }
+        .price-badge { display: inline-block; background: var(--gold); color: black; padding: 8px 20px; border-radius: 50px; font-weight: bold; font-size: 18px; }
+        select { width: 100%; padding: 15px; border-radius: 15px; background: #0b0d11; color: white; border: 1px solid var(--gold); margin: 15px 0; }
+        .wa-btn { background: #25D366; color: white; padding: 18px; border-radius: 20px; text-decoration: none; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-top: 15px; gap: 10px; }
+    </style>
+</head>
+<body>
+
+    <div id="lang-page" class="page active">
+        <div class="hero">
+            <div class="welcome-box">
+                <h1 id="txt-welcome">پڕۆژەی گەشتیاری تەقتەق</h1><button class="btn-main btn-gold" onclick="setLang('ku')">کوردی</button>
+                <button class="btn-main btn-gold" onclick="setLang('ar')">العربية</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="login-page" class="page">
+        <div class="hero">
+            <div class="welcome-box" style="width: 320px;">
+                <h2 id="txt-login-title">تۆمارکردنی ناو</h2>
+                <input type="text" id="username" placeholder="ناوەکەت بنووسە...">
+                <br><br>
+                <button class="btn-main btn-gold" style="width: 100%;" id="txt-login-btn" onclick="goMenu()">چوونە ژوورەوە</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="menu-page" class="page">
+        <div class="header">
+            <h1 style="color: var(--gold); margin: 0; font-size: 22px;" id="txt-main-title">تەقتەقی گەشتیاران</h1>
+            <p id="welcome-msg" style="color: var(--text-gray); margin-top: 10px;"></p>
+        </div>
+        <div class="grid" id="grid-items"></div>
+    </div>
+
+    <div id="sub-page" class="page">
+        <div class="detail-img-container">
+            <button onclick="goBack()" style="position:absolute; top:20px; right:20px; z-index:10; background:rgba(0,0,0,0.6); color:white; border:none; padding:10px 15px; border-radius:50px; cursor:pointer;">گەڕانەوە ⬅️</button>
+            <img id="sub-img" class="detail-img" src="">
+        </div>
+        <div class="info-card">
+            <h2 id="sub-title" style="margin:0 0 10px 0; color:var(--gold);"></h2>
+            <p id="sub-desc" style="color:var(--text-gray); line-height:1.6; font-size: 14px;"></p>
+            <div style="margin: 20px 0;">
+                <span id="txt-price-label" style="font-size:13px; color:var(--text-gray);">نرخی دیاریکراو:</span><br>
+                <div class="price-badge" id="sub-price"></div>
+            </div>
+            <label id="txt-type-label" style="font-weight:bold; font-size: 14px;"></label>
+            <select id="item-options" onchange="updatePrice()"></select>
+            <a href="#" class="wa-btn" id="wa-link" onclick="sendBooking()">
+                <span id="txt-wa-btn">حجزکردن لە واتسئەپ</span> 💬
+            </a>
+        </div>
+    </div>
+
+    <script>
+        var currentLang = 'ku';
+        var userName = "";
+        var selectedKey = "";
+
+        var pricing = {
+            kepr: [ {n: "کەپری خێزانی", p: "١٥,٠٠٠", ar: "كابينة عائلية"}, {n: "کەپری کەنار زێ", p: "٢٥,٠٠٠", ar: "كابينة على الزاب"} ],
+            fish: [ {n: "١ کیلۆ ماسی برژاو", p: "١٨,٠٠٠", ar: "١ كيلو سمك مشوي"} ],
+            food: [ {n: "نەفەرە کەبابی تایبەت", p: "١٢,٠٠٠", ar: "نفر كباب خاص"} ],
+            farm: [ {n: "خانووی ڕۆژانە", p: "٨٠,٠٠٠", ar: "بيت استراحة نهاري"} ],
+            boat: [ {n: "گەشتی بەلەمی خێرا", p: "١٥,٠٠٠", ar: "جولة قارب سريع"} ],
+            moto: [ {n: "ماتۆڕی چوار چەرخە", p: "١٠,٠٠٠", ar: "دراجة ٤ عجلات"} ],
+            cafe: [ {n: "نێرگەلە و خواردنەوە", p: "١٠,٠٠٠", ar: "ارجيلة ومشروبات"} ],
+            kids: [ {n: "یارییە گشتییەکان", p: "بێبەرامبەر", ar: "العاب عامة"} ]
+        };
+
+        var translations = {
+            ku: {
+                welcome: "پڕۆژەی گەشتیاری تەقتەق", loginTitle: "تۆمارکردنی ناو", loginBtn: "چوونە ژوورەوە",
+                mainTitle: "تەقتەقی گەشتیاران", back: "گەڕانەوە", typeLabel: "جۆری مەبەست هەڵبژێرە:",
+                waBtn: "پەیوەندی و حجزکردن", priceLabel: "نرخی دیاریکراو:",
+                services: {
+                    kepr: { t: "کەپرەکان", d: "خۆشترین کەپر لە کەناری زێی بچووک." },
+                    fish: { t: "ماسی زێ", d: "ماسی تازە و زێ بە برژاندنی داری سروشتی." },
+                    food: { t: "چێشتخانە", d: "باشترین کەباب و تیکە بە گۆشتی فرێشی ناوخۆیی." },
+                    farm: { t: "مەزرەعە", d: "خانووی مۆدێرن بۆ پشوویەکی ئارام." },
+                    boat: { t: "گەشتی بەلەم", d: "چێژ وەرگرتن لە دیمەنی زێ." },
+                    moto: { t: "ماتۆڕ سواری", d: "سەرکێشی ماتۆڕ سواری لەناو سروشت." },
+                    cafe: { t: "کافتریا", d: "خواردنەوەی سارد و گەرم و نێرگەلە." },kids: { t: "یاری مناڵان", d: "ژینگەیەکی ئارام بۆ مناڵان." }
+                }
+            },
+            ar: {
+                welcome: "منتجع طقطق السياحي", loginTitle: "تسجيل الاسم", loginBtn: "دخول",
+                mainTitle: "طقطق سياحي", back: "رجوع", typeLabel: "اختر النوع:",
+                waBtn: "الاتصال والحجز", priceLabel: "السعر المحدد:",
+                services: {
+                    kepr: { t: "الكابينات", d: "أجمل الكابينات على ضفاف الزاب." },
+                    fish: { t: "سمك الزاب", d: "سمك طازج مسكوف على الحطب." },
+                    food: { t: "المطعم", d: "أفخر أنواع الكباب والتكة." },
+                    farm: { t: "المزارع", d: "بيوت استراحة عائلية حديثة." },
+                    boat: { t: "جولة قارب", d: "استمتع بجمال النهر." },
+                    moto: { t: "الماتورات", d: "مغامرة ركوب الدراجات." },
+                    cafe: { t: "كافيتريا", d: "مشروبات باردة وساخنة." },
+                    kids: { t: "ألعاب أطفال", d: "بيئة آمنة لألعاب الأطفال." }
+                }
+            }
+        };
+
+        function showPage(id) {
+            var pages = document.getElementsByClassName('page');
+            for (var i = 0; i < pages.length; i++) { pages[i].classList.remove('active'); }
+            document.getElementById(id).classList.add('active');
+        }
+
+        function setLang(lang) {
+            currentLang = lang;
+            document.getElementById('txt-welcome').innerText = translations[lang].welcome;
+            showPage('login-page');
+        }
+
+        function goMenu() {
+            userName = document.getElementById('username').value;
+            if(!userName) { alert("ناو بنووسە"); return; }
+            document.getElementById('welcome-msg').innerText = (currentLang === 'ku' ? "بەخێرهاتی " : "أهلاً بك ") + userName;
+            
+            var grid = document.getElementById('grid-items');
+            grid.innerHTML = "";
+            var services = translations[currentLang].services;
+            
+            for (var key in services) {
+                var s = services[key];
+                // لێرە img بەکاردێنین لە جیاتی ئیمۆجی
+                grid.innerHTML += '<div class="card" onclick="openDetail(\'' + key + '\')">' +
+                                  '<img src="' + key + '.jpg" onerror="this.src=\'bridge.jpg\'">' +
+                                  '<h3>' + s.t + '</h3></div>';
+            }
+            showPage('menu-page');
+        }
+
+        function openDetail(key) {
+            selectedKey = key;
+            var item = translations[currentLang].services[key];
+            document.getElementById('sub-title').innerText = item.t;
+            document.getElementById('sub-desc').innerText = item.d;
+            document.getElementById('sub-img').src = key + ".jpg";
+            
+            var sel = document.getElementById('item-options');
+            sel.innerHTML = "";
+            var opts = pricing[key];
+            for (var i = 0; i < opts.length; i++) {
+                var name = (currentLang === 'ku') ? opts[i].n : opts[i].ar;
+                sel.innerHTML += '<option value="' + i + '">' + name + '</option>';
+            }
+            updatePrice();
+            showPage('sub-page');
+        }
+
+        function updatePrice() {
+            var idx = document.getElementById('item-options').value;
+            var p = pricing[selectedKey][idx].p;
+            document.getElementById('sub-price').innerText = p + (p === "بێبەرامبەر" ? "" : " IQD");
+        }
+
+        function sendBooking() {
+            var idx = document.getElementById('item-options').value;
+            var item = pricing[selectedKey][idx];
+            var msg = "داواکاری حجزکردن:\nناو: " + userName + "\nبەش: " + document.getElementById('sub-title').innerText + "\nجۆر: " + (currentLang==='ku'?item.n:item.ar) + "\nنرخ: " + item.p;
+            window.location.href = "https://wa.me/9647500919805?text=" + encodeURIComponent(msg);
+        }
+
+        function goBack() { showPage('menu-page'); }
+    </script>
+</body>
+</html>
